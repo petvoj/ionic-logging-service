@@ -1,7 +1,5 @@
 ﻿import { EventEmitter, Injectable } from "@angular/core";
 
-import { ConfigurationService } from "ionic-configuration-service";
-
 import * as log4javascript from "log4javascript";
 
 import { LocalStorageAppender } from "./local-storage-appender.model";
@@ -38,8 +36,7 @@ export class LoggingService {
 	// tslint:disable-next-line:completed-docs
 	private memoryAppender: MemoryAppender;
 
-	constructor(
-		private configurationService: ConfigurationService) {
+	constructor() {
 
 		// prevent log4javascript to show alerts on case of errors
 		log4javascript.logLog.setQuietMode(true);
@@ -75,9 +72,6 @@ export class LoggingService {
 	 */
 	public configure(configuration?: LoggingConfiguration): void {
 
-		if (typeof configuration === "undefined") {
-			configuration = this.configurationService.getValue("logging");
-		}
 		if (typeof configuration === "undefined") {
 			configuration = {};
 		}

@@ -4,8 +4,6 @@ import { getTestBed, TestBed } from "@angular/core/testing";
 
 import * as log4javascript from "log4javascript";
 
-import { ConfigurationService } from "ionic-configuration-service";
-
 import { LocalStorageAppender } from "./local-storage-appender.model";
 import { LogMessage } from "./log-message.model";
 import { Logger } from "./logger.model";
@@ -16,7 +14,6 @@ import { MemoryAppender } from "./memory-appender.model";
 describe("LoggingService", () => {
 
 	let injector: TestBed;
-	let configurationService: ConfigurationService;
 	let loggingService: LoggingService;
 	let httpMock: HttpTestingController;
 
@@ -24,12 +21,10 @@ describe("LoggingService", () => {
 		TestBed.configureTestingModule({
 			imports: [HttpClientTestingModule],
 			providers: [
-				ConfigurationService,
 				LoggingService,
 			],
 		});
 		injector = getTestBed();
-		configurationService = injector.get(ConfigurationService);
 		loggingService = injector.get(LoggingService);
 		httpMock = injector.get(HttpTestingController);
 	});
@@ -38,24 +33,6 @@ describe("LoggingService", () => {
 		httpMock.verify();
 		log4javascript.resetConfiguration();
 		log4javascript.getRootLogger().removeAllAppenders();
-	});
-
-	describe("ctor()", () => {
-
-		it("root logger has log level WARN", async (done) => {
-
-			configurationService.load("empty.json").then(() => {
-				loggingService.getRootLogger().info("test");
-				loggingService.getRootLogger().warn("test");
-				const messages = loggingService.getLogMessages();
-
-				expect(messages.length).toBe(1);
-				done();
-			});
-
-			const req = httpMock.expectOne("empty.json");
-			req.flush({});
-		});
 	});
 
 	describe("configure(configuration: LoggingConfiguration): void", () => {
