@@ -51,12 +51,12 @@ export class LoggingService {
 
 		// browser console appender for debugger
 		const browserConsoleAppender = new log4javascript.BrowserConsoleAppender();
-		browserConsoleAppender.setLayout(new log4javascript.PatternLayout("%d{HH:mm:ss,SSS} %c %m"));
+		browserConsoleAppender.setLayout(new log4javascript.PatternLayout("%d{HH:mm:ss.SSS}: %c %m"));
 		logger.addAppender(browserConsoleAppender);
 
 		// in-memory appender for display on log messages page
 		this.memoryAppender = new MemoryAppender();
-		this.memoryAppender.setLayout(new log4javascript.PatternLayout("%d{HH:mm:ss,SSS} %c %m"));
+		this.memoryAppender.setLayout(new log4javascript.PatternLayout("%d{HH:mm:ss.SSS}: %c %m"));
 		this.memoryAppender.setOnLogMessagesChangedCallback((message) => {
 			this.logMessagesChanged.emit(message);
 		});
@@ -136,7 +136,7 @@ export class LoggingService {
 					throw new Error(`invalid threshold ${configuration.localStorageAppender.threshold}`);
 				}
 			}
-			localStorageAppender.setLayout(new log4javascript.PatternLayout("%d{HH:mm:ss,SSS} %c %m"));
+			localStorageAppender.setLayout(new log4javascript.PatternLayout("%d{HH:mm:ss.SSS}: %c %m"));
 			if (configuration.localStorageAppender.maxMessages > 0) {
 				localStorageAppender.maxLogMessagesLength = configuration.localStorageAppender.maxMessages;
 			}
