@@ -74,10 +74,20 @@ export class MemoryAppender extends log4javascript.Appender {
 	}
 
 	/**
+	 * Clear all stored messages.
+	 * @return true
+	 */
+	public clearLogMessages(): boolean {
+		this.logMessages = [];
+		return true;
+	}
+
+	/**
 	 * Registers a callback which will be called every time a new message is appended.
 	 * @param callback callback to be called
 	 */
 	public setOnLogMessagesChangedCallback(callback: (message: LogMessage) => void): void {
 		this.onLogMessagesChangedCallback = callback;
 	}
+
 }

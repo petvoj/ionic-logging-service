@@ -69,6 +69,25 @@ describe("MemoryAppender", () => {
 			expect(messages[1].methodName).toBe("3");
 		});
 
+		it("clear all stored messages", () => {
+
+			const appender = new MemoryAppender();
+
+			const event = new log4javascript.LoggingEvent(undefined, new Date(), log4javascript.Level.INFO, ["1"]);
+			const event2 = new log4javascript.LoggingEvent(undefined, new Date(), log4javascript.Level.INFO, ["2"]);
+			const event3 = new log4javascript.LoggingEvent(undefined, new Date(), log4javascript.Level.INFO, ["3"]);
+
+			appender.maxLogMessagesLength = 2;
+			appender.append(event);
+			appender.append(event2);
+			appender.append(event3);
+
+			appender.clearLogMessages();
+
+			const messages = appender.getLogMessages();
+			expect(messages.length).toBe(0);
+		});
+
 		it("uses logger name from event if defined", () => {
 
 			const appender = new MemoryAppender();

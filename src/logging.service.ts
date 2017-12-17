@@ -175,4 +175,13 @@ export class LoggingService {
 	public getLogMessages(): LogMessage[] {
 		return this.memoryAppender.getLogMessages();
 	}
+
+	/**
+	 * Clear all log messages.
+	 * @return true
+	 */
+	public clearLogMessages(): boolean {
+		return this.memoryAppender.clearLogMessages();
+	}
+
 }
